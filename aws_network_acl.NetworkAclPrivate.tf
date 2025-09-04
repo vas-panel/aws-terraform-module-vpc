@@ -20,6 +20,46 @@ resource "aws_network_acl" "networkaclprivate" {
     protocol   = "all"
   }
 
+  ingress {
+    rule_no    = 21
+    action     = "allow"
+    cidr_block = aws_vpc.main.cidr_block
+    from_port  = 22
+    icmp_code  = 0
+    icmp_type  = 0
+    protocol   = "6"
+    to_port    = 22
+  }
+
+  ingress {
+    rule_no    = 22
+    action     = "allow"
+    cidr_block = aws_vpc.main.cidr_block
+    from_port  = 3389
+    icmp_code  = 0
+    icmp_type  = 0
+    protocol   = "6"
+    to_port    = 3389
+  }
+
+  ingress {
+    rule_no    = 41
+    action     = "deny"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 22
+    protocol   = "6"
+    to_port    = 22
+  }
+
+  ingress {
+    rule_no    = 42
+    action     = "deny"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 3389
+    protocol   = "6"
+    to_port    = 3389
+  }
+
   tags = merge(
     var.common_tags,
     {
