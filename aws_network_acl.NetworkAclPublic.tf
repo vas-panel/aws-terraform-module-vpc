@@ -25,6 +25,8 @@ resource "aws_network_acl" "networkaclpublic" {
     action     = "allow"
     cidr_block = aws_vpc.main.cidr_block
     from_port  = 22
+    icmp_code  = 0
+    icmp_type  = 0
     protocol   = "6"
     to_port    = 22
   }
@@ -34,6 +36,8 @@ resource "aws_network_acl" "networkaclpublic" {
     action     = "allow"
     cidr_block = aws_vpc.main.cidr_block
     from_port  = 3389
+    icmp_code  = 0
+    icmp_type  = 0
     protocol   = "6"
     to_port    = 3389
   }
@@ -43,6 +47,8 @@ resource "aws_network_acl" "networkaclpublic" {
     action     = "allow"
     cidr_block = aws_vpc.main.cidr_block
     from_port  = 3389
+    icmp_code  = 0
+    icmp_type  = 0
     protocol   = "17"
     to_port    = 3389
   }
@@ -72,6 +78,15 @@ resource "aws_network_acl" "networkaclpublic" {
     from_port  = 3389
     protocol   = "17"
     to_port    = 3389
+  }
+
+  ingress {
+    rule_no    = 44
+    action     = "deny"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 22
+    protocol   = "17"
+    to_port    = 22
   }
 
   tags = merge(
